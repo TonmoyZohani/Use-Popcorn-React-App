@@ -1,12 +1,14 @@
 import React from 'react'
 import NavBar from './NavBar'
 
-const NumResults = () => {
+const NumResults = ({movies}) => {
   return (
-    <div>
-      
-    </div>
-  )
+    <>
+      <p className="num-results">
+        Found <strong>{movies.length}</strong> results
+      </p>
+    </>
+  );
 }
 
 export default NumResults
