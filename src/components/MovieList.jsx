@@ -6,7 +6,7 @@ const MovieList = ({movies}) => {
     <>
       <ul className="list">
         {movies?.map((movie) => (
-          <Movie movie={movie}/>
+          <Movie key={movie.imdbID} movie={movie} />
         ))}
       </ul>
     </>
