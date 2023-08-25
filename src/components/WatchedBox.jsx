@@ -2,12 +2,9 @@ import React, { useState } from "react";
 import WatchedSummary from "./WatchedSummary";
 import WatchedMovieList from "./WatchedMovieList";
 
-
-
 const WatchedBox = ({ tempWatchedData }) => {
   const [watched, setWatched] = useState(tempWatchedData);
   const [isOpen2, setIsOpen2] = useState(true);
-
 
   return (
     <div className="box">
@@ -19,10 +16,8 @@ const WatchedBox = ({ tempWatchedData }) => {
       </button>
       {isOpen2 && (
         <>
-          <WatchedSummary watched={watched}/>
-          <WatchedMovieList watched={watched}/>
-
-      
+          <WatchedSummary watched={watched} />
+          <WatchedMovieList watched={watched} />
         </>
       )}
     </div>

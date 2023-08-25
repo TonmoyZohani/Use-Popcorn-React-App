@@ -4,6 +4,9 @@ import Main from "./components/Main";
 import Logo from "./components/Logo";
 import Search from "./components/Search";
 import NumResults from "./components/NumResults";
+import ListBox from "./components/ListBox";
+import WatchedBox from "./components/WatchedBox";
+import MovieList from "./components/MovieList";
 
 const tempMovieData = [
   {
@@ -60,12 +63,17 @@ export default function App() {
 
   return (
     <>
-      <NavBar movies={movies}>
+      <NavBar>
         <Logo />
         <Search />
         <NumResults movies={movies} />
       </NavBar>
-      <Main tempWatchedData={tempWatchedData} movies={movies} />
+      <Main>
+        <ListBox>
+          <MovieList movies={movies} />
+        </ListBox>
+        <WatchedBox tempWatchedData={tempWatchedData} />
+      </Main>
     </>
   );
 }
