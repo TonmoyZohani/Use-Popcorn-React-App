@@ -11,10 +11,9 @@ const starContainerStyle = {
 };
 
 
+const StarRating = ({ maxRating = 5,color="#fcc419",size=48,message=[] }) => {
 
-
-
-const StarRating = ({ maxRating = 5,color="#fcc419",size=48 }) => {
+  console.log(message.length);
 
   const textStyle = {
     lineHeight: "1",
@@ -41,7 +40,7 @@ const StarRating = ({ maxRating = 5,color="#fcc419",size=48 }) => {
           />
         ))}
       </div>
-      <p style={textStyle}>{rating || tempRating || ""}</p>
+      <p style={textStyle}>{ message.length===maxRating? message[tempRating? tempRating-1:rating-1]:""}</p>
     </div>
   );
 };
