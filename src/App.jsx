@@ -55,25 +55,34 @@ const tempWatchedData = [
   },
 ];
 
+const Loader = () => {
+  return <p>Loading...</p>;
+};
+
 const average = (arr) =>
   arr.reduce((acc, cur, i, arr) => acc + cur / arr.length, 0);
 
 export default function App() {
   const [movies, setMovies] = useState(tempMovieData);
+  const [isLoading, setIsLoading] = useState(false);
+  const query = "interstellar";
 
   useEffect(() => {
     const fetchMovies = async () => {
+      setIsLoading(true);
       const res = await fetch(
-        `http://www.omdbapi.com/?apikey=1e3170a0&s=interstellar`
+        `http://www.omdbapi.com/?apikey=1e3170a0&s=${query}`
       );
       const data = await res.json();
       console.log(data);
-      setMovies(data.Search)
+      setMovies(data.Search);
+      setIsLoading(false);
     };
 
-
     fetchMovies();
-  });
+  }, []);
+
+  console.log(isLoading);
 
   return (
     <>
@@ -84,7 +93,7 @@ export default function App() {
       </NavBar>
       <Main>
         <ListBox>
-          <MovieList movies={movies} />
+          {isLoading ? <Loader /> : <MovieList movies={movies} />}
         </ListBox>
         <WatchedBox tempWatchedData={tempWatchedData} />
       </Main>
