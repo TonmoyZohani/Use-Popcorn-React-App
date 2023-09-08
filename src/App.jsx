@@ -59,30 +59,56 @@ const Loader = () => {
   return <p>Loading...</p>;
 };
 
+const ErrorMessage = ({ error }) => {
+  return (
+    <p className="error">
+      <span>-</span> {error}
+    </p>
+  );
+};
+
 const average = (arr) =>
   arr.reduce((acc, cur, i, arr) => acc + cur / arr.length, 0);
 
 export default function App() {
   const [movies, setMovies] = useState(tempMovieData);
   const [isLoading, setIsLoading] = useState(false);
-  const query = "interstellar";
+  const [error, setError] = useState("");
+  const query = "interstellarasdfasf";
 
   useEffect(() => {
     const fetchMovies = async () => {
-      setIsLoading(true);
-      const res = await fetch(
-        `http://www.omdbapi.com/?apikey=1e3170a0&s=${query}`
-      );
-      const data = await res.json();
-      console.log(data);
-      setMovies(data.Search);
-      setIsLoading(false);
+      try {
+        setIsLoading(true);
+        const res = await fetch(
+          `http://www.omdbapi.com/?apikey=1e3170a0&s=${query}`
+        );
+        // to throw error
+        if (!res.ok) {
+          throw new Error("Something went wrong with fetching movies");
+        }
+
+        const data = await res.json();
+
+        if (data.Response === "False") {
+          throw new Error("Movie not found");
+        }
+
+        console.log(data);
+        setMovies(data.Search);
+      } catch (err) {
+        console.error(err);
+        setError(err.message);
+      } finally {
+        setIsLoading(false);
+      }
     };
 
     fetchMovies();
   }, []);
 
   console.log(isLoading);
+  console.log(error);
 
   return (
     <>
@@ -93,7 +119,9 @@ export default function App() {
       </NavBar>
       <Main>
         <ListBox>
-          {isLoading ? <Loader /> : <MovieList movies={movies} />}
+          {isLoading && <Loader />}
+          {!isLoading && !error && <MovieList movies={movies} />}
+          {error && <ErrorMessage error={error} />}
         </ListBox>
         <WatchedBox tempWatchedData={tempWatchedData} />
       </Main>
