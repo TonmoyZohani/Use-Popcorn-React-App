@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import NavBar from "./components/NavBar";
 import Main from "./components/Main";
 import Logo from "./components/Logo";
@@ -60,6 +60,20 @@ const average = (arr) =>
 
 export default function App() {
   const [movies, setMovies] = useState(tempMovieData);
+
+  useEffect(() => {
+    const fetchMovies = async () => {
+      const res = await fetch(
+        `http://www.omdbapi.com/?apikey=1e3170a0&s=interstellar`
+      );
+      const data = await res.json();
+      console.log(data);
+      setMovies(data.Search)
+    };
+
+
+    fetchMovies();
+  });
 
   return (
     <>
