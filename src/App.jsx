@@ -77,10 +77,14 @@ const average = (arr) =>
 export default function App() {
   const [movies, setMovies] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [selectedId, setSelectedId] = useState("wsdfasd");
+  const [selectedId, setSelectedId] = useState(null);
   const [error, setError] = useState("");
   const [query, setQuery] = useState("");
   const tempquery = "interstellar";
+
+  const handleSelectedId = (id) => {
+    setSelectedId(id);
+  };
 
   useEffect(() => {
     const fetchMovies = async () => {
@@ -107,7 +111,7 @@ export default function App() {
       }
     };
 
-    if (query.length < 3) {
+    if (!query.length) {
       setError("");
       setMovies([]);
     }
@@ -129,7 +133,9 @@ export default function App() {
       <Main>
         <ListBox>
           {isLoading && <Loader />}
-          {!isLoading && !error && <MovieList movies={movies} />}
+          {!isLoading && !error && (
+            <MovieList movies={movies} handleSelectedId={handleSelectedId} />
+          )}
           {error && <ErrorMessage error={error} />}
         </ListBox>
 

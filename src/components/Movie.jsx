@@ -1,9 +1,9 @@
-import React from 'react'
+import React from "react";
 
-const Movie = ({movie}) => {
+const Movie = ({ movie, handleSelectedId }) => {
   return (
     <div>
-      <li key={movie.imdbID}>
+      <li key={movie.imdbID} onClick={() => handleSelectedId(movie.imdbID)}>
         <img src={movie.Poster} alt={`${movie.Title} poster`} />
         <h3>{movie.Title}</h3>
         <div>
@@ -15,6 +15,6 @@ const Movie = ({movie}) => {
       </li>
     </div>
   );
-}
+};
 
-export default Movie
+export default Movie;
