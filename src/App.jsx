@@ -67,12 +67,17 @@ const ErrorMessage = ({ error }) => {
   );
 };
 
+const MovieDetails = ({ selectedId }) => {
+  return <div className="details">{selectedId}</div>;
+};
+
 const average = (arr) =>
   arr.reduce((acc, cur, i, arr) => acc + cur / arr.length, 0);
 
 export default function App() {
   const [movies, setMovies] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [selectedId, setSelectedId] = useState("wsdfasd");
   const [error, setError] = useState("");
   const [query, setQuery] = useState("");
   const tempquery = "interstellar";
@@ -111,7 +116,6 @@ export default function App() {
   }, [query]);
 
   console.log(query);
-
   console.log(isLoading);
   console.log(error);
 
@@ -128,7 +132,12 @@ export default function App() {
           {!isLoading && !error && <MovieList movies={movies} />}
           {error && <ErrorMessage error={error} />}
         </ListBox>
-        <WatchedBox tempWatchedData={tempWatchedData} />
+
+        {selectedId ? (
+          <MovieDetails selectedId={selectedId} />
+        ) : (
+          <WatchedBox tempWatchedData={tempWatchedData} />
+        )}
       </Main>
     </>
   );
