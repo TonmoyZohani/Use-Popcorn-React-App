@@ -67,8 +67,15 @@ const ErrorMessage = ({ error }) => {
   );
 };
 
-const MovieDetails = ({ selectedId }) => {
-  return <div className="details">{selectedId}</div>;
+const MovieDetails = ({ selectedId, handleCloseMovie }) => {
+  return (
+    <div className="details">
+      <button className="btn-back" onClick={handleCloseMovie}>
+        Bad
+      </button>
+      {selectedId}
+    </div>
+  );
 };
 
 const average = (arr) =>
@@ -84,6 +91,10 @@ export default function App() {
 
   const handleSelectedId = (id) => {
     setSelectedId(id);
+  };
+
+  const handleCloseMovie = () => {
+    setSelectedId(null);
   };
 
   useEffect(() => {
@@ -140,7 +151,10 @@ export default function App() {
         </ListBox>
 
         {selectedId ? (
-          <MovieDetails selectedId={selectedId} />
+          <MovieDetails
+            selectedId={selectedId}
+            handleCloseMovie={handleCloseMovie}
+          />
         ) : (
           <WatchedBox tempWatchedData={tempWatchedData} />
         )}
